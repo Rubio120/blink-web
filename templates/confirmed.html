@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reserva creada | {{ motel.name }}</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Inter,"Segoe UI",Arial,sans-serif}
+    body{background:radial-gradient(circle at 50% 0,#1b2634 0,#101722 40%,#080d14 100%);color:#f5f7fa}
+    .blink-confirmation{min-height:100vh;display:grid;place-items:center;padding:32px 16px}
+    .blink-confirmation-card{width:min(760px,100%);background:linear-gradient(145deg,rgba(27,33,42,.98),rgba(13,17,23,.99));border:1px solid #46505d;border-radius:22px;padding:34px 38px 28px;box-shadow:0 30px 80px rgba(0,0,0,.55);text-align:center}
+    .blink-check{width:76px;height:76px;border:3px solid #31d467;border-radius:50%;display:grid;place-items:center;margin:0 auto 14px;color:#31d467;font-size:42px;font-weight:800}
+    .blink-eyebrow{display:inline-block;color:#d6a638;font-size:11px;font-weight:900;letter-spacing:2px;margin:2px 0 7px}
+    .blink-confirmation-card h1{font-size:30px;line-height:1.15;margin:0;color:#fff}
+    .blink-lead{color:#cbd1d9;font-size:15px;line-height:1.65;margin:13px 0 24px}
+    .blink-lead strong{color:#50d26c}
+    .blink-summary{border:1px solid #303844;border-radius:14px;background:rgba(255,255,255,.025);padding:6px 20px;margin:0 auto 22px;text-align:left}
+    .blink-summary-row{display:grid;grid-template-columns:1fr 1.25fr;gap:18px;padding:13px 4px;border-bottom:1px solid #303844}
+    .blink-summary-row:last-child{border-bottom:0}
+    .blink-summary-row span{color:#b7c0ca;font-size:13px}
+    .blink-summary-row strong{color:#fff;font-size:14px}
+    .blink-wa{display:grid;grid-template-columns:42px 1fr 30px;align-items:center;text-align:left;gap:10px;width:100%;padding:14px 17px;border:1px solid #42d261;border-radius:12px;background:linear-gradient(135deg,#188d31,#0d7426);color:#fff;text-decoration:none;box-shadow:0 8px 22px rgba(8,123,36,.22);transition:.2s ease}
+    .blink-wa:hover{filter:brightness(1.08);transform:translateY(-1px)}
+    .blink-wa-icon{width:36px;height:36px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:19px;font-weight:800}
+    .blink-wa b{display:block;font-size:14px}.blink-wa small{display:block;margin-top:3px;font-size:11px;opacity:.88}.blink-arrow{font-size:26px}
+    .blink-back{display:flex;justify-content:center;align-items:center;gap:5px;flex-wrap:wrap;margin-top:10px;padding:13px;border:1px solid #59616d;border-radius:12px;color:#fff;text-decoration:none;font-size:12px;font-weight:800;transition:.2s ease}
+    .blink-back:hover{background:rgba(255,255,255,.04)}
+    .blink-back small{width:100%;font-weight:400;color:#aeb6c0}
+    .blink-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1px solid #303844;margin-top:22px;padding-top:20px;color:#d7a63a;font-size:9px;font-weight:900;letter-spacing:.7px}
+    @media(max-width:600px){
+      .blink-confirmation{padding:14px 10px;align-items:start}
+      .blink-confirmation-card{padding:24px 16px 20px;border-radius:17px}
+      .blink-check{width:64px;height:64px;font-size:34px}
+      .blink-confirmation-card h1{font-size:24px}
+      .blink-lead{font-size:14px;margin-bottom:18px}
+      .blink-summary{padding:4px 13px}
+      .blink-summary-row{grid-template-columns:1fr;gap:4px;padding:10px 2px}
+      .blink-summary-row span{font-size:11px}.blink-summary-row strong{font-size:14px}
+      .blink-wa{grid-template-columns:38px 1fr 24px;padding:13px}
+      .blink-trust{grid-template-columns:1fr 1fr;row-gap:14px}
+    }
+  </style>
+</head>
+<body>
+  <main class="blink-confirmation">
+    <section class="blink-confirmation-card" aria-labelledby="confirmation-title">
+      <div class="blink-check" aria-hidden="true">✓</div>
+      <span class="blink-eyebrow">RESERVA CREADA</span>
+      <h1 id="confirmation-title">¡Reserva N° {{ reservation.id }} creada con éxito!</h1>
+      <p class="blink-lead">Tu solicitud fue registrada correctamente.<br>Ahora enviá los datos por <strong>WhatsApp</strong> para confirmar tu reserva.</p>
+
+      <div class="blink-summary">
+        <div class="blink-summary-row"><span>Habitación</span><strong>{{ room.name }}</strong></div>
+        <div class="blink-summary-row"><span>Fecha y hora</span><strong>{{ reservation.start_at.replace('T', ' ') }}</strong></div>
+        <div class="blink-summary-row"><span>Duración</span><strong>{{ reservation.duration_text }}</strong></div>
+        <div class="blink-summary-row"><span>Total</span><strong>Gs. {{ "{:,.0f}".format(reservation.price).replace(',', '.') }}</strong></div>
+        <div class="blink-summary-row"><span>Cliente</span><strong>{{ reservation.customer_name }}</strong></div>
+      </div>
+
+      <a class="blink-wa" href="{{ whatsapp_url }}" target="_blank" rel="noopener">
+        <span class="blink-wa-icon">☎</span>
+        <span><b>ENVIAR POR WHATSAPP</b><small>Enviar mis datos para confirmar</small></span>
+        <span class="blink-arrow">→</span>
+      </a>
+      <a class="blink-back" href="{{ url_for('index') }}">← &nbsp; VOLVER AL INICIO <small>Hacer otra reserva</small></a>
+
+      <div class="blink-trust"><span>DISCRECIÓN</span><span>CONFORT</span><span>SEGURIDAD</span><span>24 HORAS</span></div>
+    </section>
+  </main>
+</body>
+</html>

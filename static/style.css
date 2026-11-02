@@ -1,0 +1,40 @@
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#eef1f5;color:#111c31}.shell{width:min(1180px,94%);margin:auto}.topbar{height:70px;background:#101a35;color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 18px #0002}.nav-inner{height:100%;display:flex;align-items:center;gap:28px}.brand img{width:108px;height:48px;object-fit:cover;object-position:center;border-radius:5px;filter:contrast(1.05)}.navlinks{display:flex;gap:28px;flex:1}.navlinks a,.wa-pill{color:#e8edf7;text-decoration:none;font-size:13px}.navlinks a:hover{color:#fff}.wa-pill{border:1px solid #8b97b2;border-radius:22px;padding:10px 16px}.hero-ref{height:430px;background:url('/static/blink_motel_fachada.webp') center 58%/cover no-repeat;position:relative}.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,15,42,.92) 0%,rgba(8,17,45,.66) 35%,rgba(5,12,34,.08) 72%)}.hero-content{height:100%;position:relative;display:flex;align-items:center}.hero-copy{width:470px;color:#fff}.micro{font-size:11px;letter-spacing:3px;opacity:.8}.script-logo{font-family:'Brush Script MT','Segoe Script',cursive;font-size:76px;font-weight:700;line-height:.78;margin:24px 0 14px;text-shadow:0 3px 10px #0007}.script-logo span{display:block;margin-left:65px}.hero-copy>p{font-size:17px;margin:0 0 18px}.address-pill{display:inline-flex;gap:12px;border:1px solid #8490aa;background:#101a35aa;border-radius:24px;padding:10px 18px;font-size:12px}.feature-row{display:flex;margin-top:25px}.feature-row div{width:100px;text-align:center;border-right:1px solid #ffffff55}.feature-row div:last-child{border:0}.feature-row b{display:block;font-size:23px}.feature-row span{font-size:11px}.quick{margin-top:-25px;position:relative;z-index:5;background:#fff;border-radius:20px;box-shadow:0 12px 35px #26334d22;padding:18px 20px;display:grid;grid-template-columns:1.1fr 1fr 1.2fr 1fr .9fr;gap:12px;align-items:end}.quick-title{display:flex;flex-direction:column}.quick-title span{font-size:11px;color:#71809b}.qfield label,.booking-panel label{display:block;font-size:11px;font-weight:800;margin:0 0 6px}.qfield input,.qfield select,.booking-panel input,.booking-panel select{width:100%;height:42px;border:1px solid #d8dee8;border-radius:8px;background:#fff;padding:0 11px;color:#18233a}.dark-btn,.confirm-btn{height:42px;border:0;border-radius:8px;background:#15213f;color:#fff;font-weight:800;cursor:pointer}.content{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:28px;padding:42px 0}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:16px}.section-head h2{font-size:26px;margin:0}.section-head p{font-size:12px;color:#758198;margin:3px 0}.section-head>span{font-size:12px}.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.category-card{background:#fff;border-radius:13px;overflow:hidden;box-shadow:0 5px 16px #27365118;border:1px solid #dde3ec}.cat-photo{height:120px;position:relative;background:linear-gradient(135deg,#242d40,#080c14)}.cat-photo.standard{background:linear-gradient(135deg,#3d526b,#151b2a)}.cat-photo.premium{background:linear-gradient(135deg,#5e1f32,#160b13)}.cat-photo:after{content:'BLINK';position:absolute;right:14px;bottom:9px;font:700 34px 'Brush Script MT',cursive;color:#ffffff1f}.cat-photo span{position:absolute;left:10px;bottom:9px;background:#fff;border-radius:16px;padding:5px 11px;font-size:11px}.premium span{background:#e7c7a1}.cat-body{padding:12px}.cat-body>div:first-child{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:12px}.cat-body strong{font-size:20px}.cat-body small{display:block;text-align:right;color:#758198}.amenities{border-top:1px solid #edf0f4;margin-top:9px;padding-top:9px;font-size:10px;color:#526078}.extra-note{text-align:center;font-size:11px;color:#5d687b;margin:18px 0}.availability-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.availability-grid span{background:#fff;border:1px solid #dfe5ee;border-radius:6px;padding:6px;text-align:center;font-size:9px;color:#30835b}.availability-grid span.busy{color:#b93636;background:#fff4f4}.booking-panel{background:#fff;border-radius:16px;padding:18px;box-shadow:0 12px 30px #1d2a441c;align-self:start;margin-top:-86px;position:relative;z-index:6}.panel-logo{text-align:center}.panel-logo img{width:112px;height:62px;object-fit:cover;border-radius:7px}.booking-panel h3{margin:8px 0 14px;font-size:19px}.booking-panel label{margin-top:10px}.total-box{text-align:center;border-top:1px solid #e6e9ef;margin-top:15px;padding:15px 0}.total-box span,.total-box small{display:block;font-size:10px;color:#778298}.total-box strong{display:block;font-size:24px}.confirm-btn{width:100%;background:#142140}.alert{font-size:11px;background:#fff2d5;color:#7a4c00;padding:9px;border-radius:7px}.location-strip{background:#172342;color:#fff;padding:18px 0}.location-strip .shell{display:grid;grid-template-columns:130px 1.5fr .8fr 1fr auto;gap:24px;align-items:center}.location-strip img{width:95px;height:48px;object-fit:cover;border-radius:5px}.location-strip div div{font-size:11px}.location-strip small{display:block;opacity:.7}.location-strip a{color:#fff;border:1px solid #6e7d9b;border-radius:20px;padding:9px 15px;text-decoration:none;font-size:12px}.location-actions{display:flex;gap:8px;justify-content:flex-end;white-space:nowrap}
+@media(max-width:900px){.navlinks{display:none}.wa-pill{margin-left:auto}.hero-ref{height:500px}.hero-copy{width:100%}.quick{grid-template-columns:1fr 1fr}.quick-title{grid-column:1/-1}.content{grid-template-columns:1fr}.booking-panel{margin-top:0}.category-grid{grid-template-columns:1fr}.availability-grid{grid-template-columns:repeat(3,1fr)}.location-strip .shell{grid-template-columns:1fr 1fr}.location-strip img{display:none}}
+@media(max-width:560px){.location-actions{justify-content:flex-start;flex-wrap:wrap}.hero-ref{height:470px}.script-logo{font-size:60px}.feature-row div{width:25%}.quick{grid-template-columns:1fr}.category-grid{grid-template-columns:1fr}.availability-grid{grid-template-columns:repeat(2,1fr)}.location-strip .shell{grid-template-columns:1fr}.content{padding-top:28px}}
+
+/* Optimización móvil y de renderizado, sin alterar la identidad visual. */
+@media(max-width:900px){
+  .public-site{overflow-x:hidden}
+  .shell{width:min(100% - 24px,1180px)}
+  .topbar{height:64px}
+  .brand img{width:100px;height:44px}
+  .hero-ref{height:460px;background-position:center 58%}
+  .quick{margin-top:-20px;padding:16px}
+  .content{gap:20px}
+  .booking-panel{width:100%}
+  .qfield input,.qfield select,.booking-panel input,.booking-panel select{font-size:16px}
+}
+@media(max-width:560px){
+  .shell{width:min(100% - 18px,1180px)}
+  .topbar{height:60px}
+  .brand img{width:92px;height:40px}
+  .wa-pill{padding:9px 11px;font-size:11px}
+  .hero-ref{height:430px}
+  .hero-copy{padding-bottom:8px}
+  .micro{font-size:9px;letter-spacing:2px}
+  .script-logo{font-size:56px;margin-top:20px}
+  .address-pill{max-width:100%;line-height:1.35}
+  .feature-row{margin-top:20px}
+  .feature-row span{font-size:10px}
+  .quick{border-radius:15px;padding:14px 12px;gap:10px}
+  .dark-btn,.confirm-btn{min-height:44px}
+  .section-head{align-items:flex-start;gap:8px;flex-direction:column}
+  .section-head h2{font-size:23px}
+  .category-card,.booking-panel{border-radius:13px}
+  .booking-panel{padding:15px}
+  .location-strip{padding:16px 0}
+  .location-strip .shell{gap:15px}
+  .location-strip a{display:inline-flex;align-items:center;min-height:42px}
+}
+
+@media(max-width:700px){.hero-ref{background-image:url('/static/blink_motel_fachada_mobile.webp')}}

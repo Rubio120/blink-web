@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ motel.name }} | Reservas</title>
+<link rel="preload" href="{{ url_for('static', filename='blink_motel_fachada_mobile.webp') }}" as="image" media="(max-width:700px)" fetchpriority="high">
+<link rel="preload" href="{{ url_for('static', filename='blink_motel_fachada.webp') }}" as="image" media="(min-width:701px)" fetchpriority="high">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+.datetime-picker{
+  margin-top:6px;padding:11px;border:1px solid #dfe5ee;border-radius:12px;background:#f8fafc;
+}
+.datetime-date-row{margin-bottom:9px}
+.datetime-time-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.datetime-field-label{
+  display:block;margin:0 0 5px;font-size:10px;line-height:1;font-weight:800;
+  color:#697586;letter-spacing:.03em;text-transform:uppercase;
+}
+.datetime-picker input,.datetime-picker select{
+  width:100%;min-width:0;height:42px;margin:0;padding:0 10px;border:1px solid #cfd8e5;
+  border-radius:9px;background:#fff;font-size:13px;font-weight:700;color:#15233d;box-sizing:border-box;
+}
+.datetime-picker input:focus,.datetime-picker select:focus{
+  outline:none;border-color:#9aa9bd;box-shadow:0 0 0 3px rgba(21,35,61,.07);
+}
+.datetime-period select{font-weight:900;text-align:center}
+@media(max-width:380px){
+  .datetime-picker{padding:9px}.datetime-time-row{gap:5px}
+  .datetime-picker input,.datetime-picker select{padding:0 7px;font-size:12px}
+}
+</style><style>
+.datetime-time-24h{grid-template-columns:repeat(2,minmax(0,1fr))}
+</style></head>
+<body class="public-site">
+<nav class="topbar"><div class="shell nav-inner">
+<a class="brand" href="#inicio"><img src="{{ url_for('static', filename='blink_logo.webp') }}" alt="Blink Motel" width="240" height="281" decoding="async"></a>
+<div class="navlinks"><a href="#inicio">⌂ Inicio</a><a href="#reservar">▣ Reservar</a><a href="#habitaciones">● Información</a><a href="#ubicacion">● Ubicación</a></div>
+<a class="wa-pill" href="#reservar">◉ Reservar por WhatsApp</a>
+</div></nav>
+
+<header class="hero-ref" id="inicio"><div class="hero-shade"></div><div class="shell hero-content">
+<div class="hero-copy"><div class="micro">DISCRECIÓN · CONFORT · MOMENTOS ESPECIALES</div><div class="script-logo">Blink <span>Motel</span></div><p>El lugar perfecto para tu tiempo.</p>
+<div class="address-pill">● <span>{{ motel.address }}</span></div>
+<div class="feature-row"><div><b>◷</b><span>Abierto<br>24 horas</span></div><div><b>▣</b><span>Acceso<br>discreto</span></div><div><b>◇</b><span>Seguridad<br>Total</span></div><div><b>♡</b><span>Ambiente<br>Privado</span></div></div>
+</div></div></header>
+
+<main>
+<section class="content shell" id="habitaciones"><div class="main-col"><div class="section-head"><div><h2>Nuestras Habitaciones</h2><p>Modernas, cómodas y diseñadas para tu privacidad.</p></div><span>◷ Tarifa por 90 minutos</span></div>
+<div class="category-grid">
+<article class="category-card"><div class="cat-photo economy"><span>Económica</span></div><div class="cat-body"><div><b>Habitaciones 1 - 7</b><strong>Gs. 45.000</strong></div><small>90 minutos</small><div class="amenities">⌁ Wi‑Fi　❄ Aire Acond.　▣ TV</div></div></article>
+<article class="category-card"><div class="cat-photo standard"><span>Estándar</span></div><div class="cat-body"><div><b>Habitaciones 8 - 13</b><strong>Gs. 50.000</strong></div><small>90 minutos</small><div class="amenities">⌁ Wi‑Fi　❄ Aire Acond.　▣ TV</div></div></article>
+<article class="category-card"><div class="cat-photo premium"><span>Premium</span></div><div class="cat-body"><div><b>Habitaciones 14 - 15</b><strong>Gs. 70.000</strong></div><small>90 minutos</small><div class="amenities">⌁ Wi‑Fi　❄ Aire Acond.　▣ TV</div></div></article>
+</div>
+<div class="extra-note">◷ Tiempo adicional: <b>Habitaciones 1–13 Gs. 20.000</b> cada 30 min · <b>Habitaciones 14–15 Gs. 30.000</b> cada 30 min.</div>
+<div class="availability-grid">{% for r in rooms %}<span id="availability-{{r.id}}">Hab. {{'%02d'|format(r.id)}} · consultar horario</span>{% endfor %}</div>
+</div>
+
+<aside class="booking-panel" id="reservar"><div class="panel-logo"><img src="{{ url_for('static', filename='blink_logo.webp') }}" alt="Blink Motel" width="240" height="281" decoding="async" loading="lazy"></div><h3>Nueva Reserva</h3>
+{% with messages=get_flashed_messages() %}{% if messages %}<div class="alert">{% for m in messages %}{{m}}{% if not loop.last %}<br>{% endif %}{% endfor %}</div>{% endif %}{% endwith %}
+<form action="{{url_for('reservar')}}" method="post">
+<label>Habitación</label><select id="room_id" name="room_id" required onchange="updatePrice()">{% for r in rooms %}<option value="{{r.id}}" data-base="{{r.base_price}}" data-extra="{{r.additional_30}}">Habitación {{r.id}}{% if r.id>=14 %} (Premium){% elif r.id>=8 %} (Estándar){% else %} (Económica){% endif %} — Gs. {{'{:,.0f}'.format(r.base_price).replace(',','.')}}</option>{% endfor %}</select>
+<label>Fecha y hora</label>
+<div id="datetime12-wrap" class="datetime-picker">
+  <div class="datetime-date-row">
+    <span class="datetime-field-label">Fecha</span>
+    <input id="booking_date" name="booking_date" type="date" required aria-label="Fecha" onchange="syncStartAt()">
+  </div>
+  <div class="datetime-time-row datetime-time-24h">
+    <div>
+      <span class="datetime-field-label">Hora (24 h)</span>
+      <select id="booking_hour" name="booking_hour" required aria-label="Hora en formato 24 horas" onchange="syncStartAt()">
+        <option value="">Hora</option><option value="00">00</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option>
+      </select>
+    </div>
+    <div>
+      <span class="datetime-field-label">Minutos</span>
+      <input id="booking_minute" name="booking_minute" type="text" inputmode="numeric" maxlength="2" value="00" placeholder="00" autocomplete="off" required aria-label="Minutos" oninput="sanitizeTimePart(this,59);syncStartAt()">
+    </div>
+  </div>
+</div>
+<input id="start_at" type="hidden">
+<label>Duración</label><select id="duration_minutes" name="duration_minutes" required onchange="updatePrice();refreshAvailability()">{% for mins in range(90,721,30) %}<option value="{{mins}}">{% if mins==90 %}90 minutos{% elif mins%60==0 %}{{mins//60}} horas{% else %}{{mins//60}} h 30 min{% endif %}</option>{% endfor %}</select>
+<label>Nombre completo</label><input name="customer_name" maxlength="100" placeholder="Tu nombre completo" required>
+<label>Teléfono / WhatsApp</label><input name="phone" placeholder="09XX XXX XXX" required>
+<div class="total-box"><span>Precio total</span><strong id="total">Gs. 0</strong><small id="duration_label">90 minutos</small></div>
+<button class="confirm-btn" type="submit">◉ Confirmar y enviar por WhatsApp</button></form></aside>
+</section>
+
+<section class="location-strip" id="ubicacion"><div class="shell"><img src="{{ url_for('static', filename='blink_logo.webp') }}" alt="Blink" width="240" height="281" decoding="async" loading="lazy"><div>● <b>{{motel.address}}</b><small>{{motel.reference}}</small></div><div>◷ <b>Abierto</b><small>las 24 horas</small></div><div><b>Discreción · Confort · Seguridad</b></div><div class="location-actions"><a href="#reservar">◉ Reservar ahora</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Luis+Casartelli+y+Carlos+Pastore%2C+San+Lorenzo%2C+Paraguay" target="_blank" rel="noopener noreferrer">⌖ Cómo llegar</a></div></div></section>
+</main>
+<script>
+const roomData={% for r in rooms %}{{r.id}}:{base:{{r.base_price}},extra:{{r.additional_30}}}{% if not loop.last %},{% endif %}{% endfor %}};
+function updatePrice(){const room=document.getElementById('room_id'),duration=document.getElementById('duration_minutes'),total=document.getElementById('total'),label=document.getElementById('duration_label');if(!room||!duration||!total||!label)return;const opt=room.options[room.selectedIndex];if(!opt)return;const base=Number(opt.dataset.base||0),extra=Number(opt.dataset.extra||0),m=Number(duration.value||90),n=Math.max(0,Math.floor((m-90)/30)),price=base+n*extra;total.textContent='Gs. '+price.toLocaleString('es-PY');label.textContent=m===90?'90 minutos':(m%60===0?(m/60)+' horas':Math.floor(m/60)+' h 30 min');}
+async function refreshAvailability(){const s=document.getElementById('start_at').value,m=document.getElementById('duration_minutes').value;if(!s)return;try{const res=await fetch('/api/disponibilidad?start_at='+encodeURIComponent(s)+'&duration_minutes='+m);if(!res.ok)return;const d=await res.json(),blocked=new Set(d.unavailable_room_ids||[]);document.querySelectorAll('#room_id option').forEach(o=>o.disabled=blocked.has(+o.value));for(const id of Object.keys(roomData)){const e=document.getElementById('availability-'+id);if(e){e.textContent='Hab. '+String(id).padStart(2,'0')+' · '+(blocked.has(+id)?'NO DISPONIBLE':'DISPONIBLE');e.classList.toggle('busy',blocked.has(+id));}}}catch(e){}}
+function sanitizeTimePart(el,max){
+  el.value=el.value.replace(/\D/g,'').slice(0,2);
+  if(el.value.length===2 && Number(el.value)>max) el.value=String(max);
+}
+function syncStartAt(){
+  const date=document.getElementById('booking_date')?.value||'';
+  const hourRaw=document.getElementById('booking_hour')?.value||'';
+  const minuteRaw=document.getElementById('booking_minute')?.value||'';
+  const hidden=document.getElementById('start_at');
+  if(!hidden)return;
+  if(!date||hourRaw===''||minuteRaw===''){hidden.value='';return;}
+  const hour=parseInt(hourRaw,10);
+  const minute=parseInt(minuteRaw,10);
+  if(Number.isNaN(hour)||hour<0||hour>23||Number.isNaN(minute)||minute<0||minute>59){
+    hidden.value='';return;
+  }
+  hidden.value=date+'T'+String(hour).padStart(2,'0')+':'+String(minute).padStart(2,'0');
+  refreshAvailability();
+}
+const dt=new Date();
+const yyyy=dt.getFullYear(),mm=String(dt.getMonth()+1).padStart(2,'0'),dd=String(dt.getDate()).padStart(2,'0');
+const dateInput=document.getElementById('booking_date');
+if(dateInput)dateInput.min=yyyy+'-'+mm+'-'+dd;
+updatePrice();
+</script></body></html>
